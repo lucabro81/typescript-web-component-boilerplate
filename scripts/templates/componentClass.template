@@ -1,0 +1,17 @@
+import html from './{{cmpName}}.html';
+import style from './{{cmpName}}.css';
+import {Component} from "@/utils";
+
+@Component({
+    html: html,
+    style: style,
+})
+export class {{cmpNameCamelCase}} {
+
+    constructor(private $el: HTMLElement) {}
+
+    connectedCallback() {
+        console.log('{{cmpName}} connected');
+    }
+
+}
