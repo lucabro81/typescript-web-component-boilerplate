@@ -1,17 +1,40 @@
 import html from './{{cmpName}}.html';
 import style from './{{cmpName}}.css';
 import {Component} from "@/utils";
+import {IWebComponent} from "@/interfaces";
 
 @Component({
     html: html,
     style: style,
 })
-export class {{cmpNameCamelCase}} {
+export class {{cmpNameCamelCase}} implements IWebComponent {
 
-    constructor(private $el: HTMLElement) {}
+	static observedAttributes() {
+    // return an array containing the names of the attributes you want to observe
+	}
 
-    connectedCallback() {
-        console.log('{{cmpName}} connected');
-    }
+  constructor(private $el: HTMLElement) {}
+
+  connectedCallback() {
+    // Invoked each time the custom element is disconnected from the document's DOM.
+    console.log('{{cmpName}} connected');
+  }
+
+  disconnectedCallback() {
+    // Invoked each time the custom element is moved to a new document.
+    console.log('{{cmpName}} disconnected');
+  }
+
+  adoptedCallback() {
+    // Invoked each time the custom element is moved to a new document.
+  }
+
+  attributeChangedCallback(name: string, oldValue: any, newValue: any) {
+     // Invoked each time one of the custom element's attributes is added, removed, or changed.
+     // Which attributes to notice change for is specified in a static get observedAttributes method
+     console.log(`${name} changed`);
+  }
 
 }
+
+// Ref.: https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements
