@@ -9,14 +9,18 @@ import {IWebComponent} from "@/interfaces";
 })
 export class HelloWorld implements IWebComponent {
 
-	static observedAttributes() {
+	static get observedAttributes(): Array<string> {
     // return an array containing the names of the attributes you want to observe
+    return [];
 	}
 
   constructor(private $el: HTMLElement) {}
 
+  /**
+   * Invoked each time the custom element is appended into a document-connected element.
+   * This will happen each time the node is moved, and may happen before the element's contents have been fully parsed.
+   */
   connectedCallback() {
-    // Invoked each time the custom element is disconnected from the document's DOM.
     console.log('hello-world2 connected');
 
     let textcontainer = this.$el.querySelector('.show-clicked-btn');
@@ -28,18 +32,29 @@ export class HelloWorld implements IWebComponent {
     })
   }
 
+  /**
+   * Invoked each time the custom element is disconnected from the document's DOM.
+   */
   disconnectedCallback() {
-    // Invoked each time the custom element is moved to a new document.
     console.log('hello-world2 disconnected');
   }
 
+  /**
+   * Invoked each time the custom element is moved to a new document.
+   */
   adoptedCallback() {
-    // Invoked each time the custom element is moved to a new document.
+    console.log('hello-world2 moved');
   }
 
+  /**
+   * Invoked each time one of the custom element's attributes is added, removed, or changed.
+   * Which attributes to notice change for is specified in a static get observedAttributes method
+   *
+   * @param name
+   * @param oldValue
+   * @param newValue
+   */
   attributeChangedCallback(name: string, oldValue: any, newValue: any) {
-     // Invoked each time one of the custom element's attributes is added, removed, or changed.
-     // Which attributes to notice change for is specified in a static get observedAttributes method
      console.log(`${name} changed`);
   }
 
