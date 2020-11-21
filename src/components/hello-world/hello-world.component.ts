@@ -7,14 +7,14 @@ import {IWebComponent} from "@/interfaces";
     html: html,
     style: style,
 })
-export class HelloWo rld implements IWebComponent {
+export class HelloWorld implements IWebComponent {
 
 	static get observedAttributes(): Array<string> {
     // return an array containing the names of the attributes you want to observe
     return [];
 	}
 
-  constructor(private $el: HTMLElement) {}
+  constructor(private $el: HTMLEl ement) {}
 
   /**
    * Invoked each time the custom element is appended into a document-connected element.
@@ -27,7 +27,7 @@ export class HelloWo rld implements IWebComponent {
 
     this.$el.querySelector('.btn-to-click')?.addEventListener('click', () => {
       if (textcontainer) {
-        textcontainer.innerHTML = 'clicked!!';
+        textcontainer.innerHTML = "clicked!!";
       }
     })
   }
