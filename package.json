@@ -4,14 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve": "ts-node -O '{ \"module\": \"commonjs\" }' server.ts",
-    "build": "webpack --config webpack.config.js"
+    "start": "webpack serve",
+    "watch": "webpack --watch",
+    "build": "webpack",
+    "build:prod": "webpack --configFile webpack.prod.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.8",
     "babel-minify-webpack-plugin": "^0.3.1",
+    "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^5.0.0",
     "express": "^4.17.1",
     "fs-extra": "^9.0.1",
@@ -29,6 +32,7 @@
     "tslib": "^2.0.3",
     "typescript": "^4.0.5",
     "webpack": "^5.3.2",
-    "webpack-cli": "^4.1.0"
+    "webpack-cli": "^4.1.0",
+    "webpack-dev-server": "^3.11.0"
   }
 }

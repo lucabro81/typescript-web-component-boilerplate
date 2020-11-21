@@ -21,7 +21,7 @@ export class HelloWorld implements IWebComponent {
    * This will happen each time the node is moved, and may happen before the element's contents have been fully parsed.
    */
   connectedCallback() {
-    console.log('hello-world2 connected');
+    console.log('hello-world2 connected ');
 
     let textcontainer = this.$el.querySelector('.show-clicked-btn');
 

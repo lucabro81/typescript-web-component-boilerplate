@@ -1,24 +1,11 @@
 const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
-	mode: 'development',
+	mode: 'production',
 	entry: './src/main.ts',
 	devtool: 'source-map',
-	devServer: {
-		contentBase: './public',
-		publicPath: '/dist/',
-		open: true
-	},
-	plugins: [
-		new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
-	],
-	watch: true,
-	watchOptions: {
-		ignored: ['scripts/**/*.[js|template]', 'node_modules/**']
-	},
 	module: {
 		rules: [
 			{
@@ -49,7 +36,7 @@ module.exports = {
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		filename: 'bundle.js',
-		chunkFilename: "[id].bundle.js"
+		chunkFilename: "[id].js"
 	},
 
 	optimization: {
@@ -58,7 +45,7 @@ module.exports = {
 			new TerserPlugin({
 				terserOptions: {
 					compress: {
-						drop_console: false,
+						drop_console: true,
 					},
 					output: {
 						comments: false,
