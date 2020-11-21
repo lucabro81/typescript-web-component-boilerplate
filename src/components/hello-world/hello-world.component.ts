@@ -7,7 +7,7 @@ import {IWebComponent} from "@/interfaces";
     html: html,
     style: style,
 })
-export class HelloWorld implements IWebComponent {
+export class HelloWo rld implements IWebComponent {
 
 	static get observedAttributes(): Array<string> {
     // return an array containing the names of the attributes you want to observe
