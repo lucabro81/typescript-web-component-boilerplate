@@ -14,7 +14,7 @@ export class HelloWorld implements IWebComponent {
     return [];
 	}
 
-  constructor(private $el: HTMLE lement) {}
+  constructor(private $el: HTMLElement) {}
 
   /**
    * Invoked each time the custom element is appended into a document-connected element.
