@@ -1,6 +1,8 @@
 {
 	"name": "typescript-web-components-lazy-loaded-template",
 	"version": "1.0.0",
+	"author": "Luca Brognara",
+	"license": "ISC",
 	"description": "Template to build web components collections lazy loaded",
 	"main": "index.js",
 	"scripts": {
@@ -17,8 +19,9 @@
 			"pre-commit": "npm run lint"
 		}
 	},
-	"author": "Luca Brognara",
-	"license": "ISC",
+	"bin": {
+		"create-new-component": "./scripts/newComponent.js"
+	},
 	"devDependencies": {
 		"@types/express": "^4.17.8",
 		"@typescript-eslint/eslint-plugin": "^4.8.1",

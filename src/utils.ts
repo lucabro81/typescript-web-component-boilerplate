@@ -32,7 +32,6 @@ export const wrap = (importFn: () => Promise<any>, className: string) => {
 			this._connected = true;
 		}
 
-
 	}
 
 	return CustomComponent;

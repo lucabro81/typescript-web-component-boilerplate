@@ -1,4 +1,4 @@
-// get rid of group with too much -, spaces and underllines
+// get rid of group with too much -, spaces and underlines
 const cleanStr = (str) => str.replace(/[\s-_]+/g, '-');
 
 module.exports = {
