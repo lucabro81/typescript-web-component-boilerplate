@@ -19,6 +19,16 @@
 			"pre-commit": "npm run lint"
 		}
 	},
+	"keywords": [
+		"webcomponents",
+		"webcomponent",
+		"HTMLElement",
+		"CustomElements",
+		"Typescript",
+		"lazy loading",
+		"template",
+		"boilerplate"
+	],
 	"bin": {
 		"create-new-component": "./scripts/newComponent.js"
 	},
