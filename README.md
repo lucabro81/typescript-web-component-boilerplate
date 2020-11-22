@@ -1,6 +1,6 @@
 # Typescript Web Component Boilerplate
 
-Template to build lazy loaded web components collections with typescript and nothing(almost)else. Well, there're some other dependecies but are mainly for webpack.
+Template to build lazy loaded web components collections with Typescript and nothing(almost)else. Well, there're some other dependencies but are mainly for webpack.
 
 ### Installation
 
@@ -16,7 +16,7 @@ npm link
 ```
 create-new-component nameComponent
 ```
-This command will create a component class in the ```src``` folder named ```name-component```, with three files inside for the typescript class, the css file and the html template.
+This command will create a component folder in ```/src```, named ```/name-component```, with three files inside: a Typescript class, the css file and the html template.
 
 An import will be added to ```main.ts```
 
@@ -25,12 +25,12 @@ An import will be added to ```main.ts```
 ```
 npm run start
 ```
-Start a dev server with hot reloading
+Start a webpack dev server with hot reloading
 
 ---
 
 ```
-npm run webpack
+npm run watch
 ```
 Start a webpack watcher
 
@@ -53,18 +53,18 @@ Guess what production mode... yep.
 ```
 npm run clean
 ```
-Get rid of node_modules and package.json and reinstall all the (few) dependencies
+Get rid of ```node_modules``` and ```package.json``` and reinstall all the (few) dependencies
 
 ---
 
 ```
 npm run update
 ```
-Guess what... yep.
+Update dependencies.
 
 ---
 
 ```
 npm run lint
 ```
-Linter and prettier that run on staged modifies, it seems the git hook doesn't work with phpstorm, I've to understand why
+Linter and prettier that run on staged modifies, it seems the git hook on commit doesn't work with phpstorm, I've to understand why
