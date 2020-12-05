@@ -28,8 +28,17 @@ if (nameComponent) {
 	let htmlTemplate = fs.readFileSync('./scripts/templates/componentHTML.template', 'utf8');
 	htmlTemplate = htmlTemplate.replace(regexNameComponent, kebabNameComponent);
 
+	// read the html template
+	let observedAttributesTemplate = fs.readFileSync('./scripts/templates/observedAttributes.template', 'utf8');
+
 	// ts file
 	fs.writeFileSync(`${componentsDir}/${kebabNameComponent}.component.ts`, classTemplate, function (err) {
+		if (err) return console.log(err);
+	});
+	console.log(`Created ${componentsDir}/${kebabNameComponent}.component.ts`);
+
+	// ts observed attributes file
+	fs.writeFileSync(`${componentsDir}/${kebabNameComponent}.observed-attributes.ts`, observedAttributesTemplate, function (err) {
 		if (err) return console.log(err);
 	});
 	console.log(`Created ${componentsDir}/${kebabNameComponent}.component.ts`);
@@ -48,8 +57,33 @@ if (nameComponent) {
 
 	// update main.ts
 	let main = fs.readFileSync('./src/main.ts','utf8');
-	main = main.replace(/\n$/gm,
-		`\ncustomElements.define(\'${kebabNameComponent}\', wrap(()=>import(\'./components/${kebabNameComponent}/${kebabNameComponent}.component\'), \'${pascalNameComponent}\'));\n`);
+
+	// find last import
+	let lastImportPosition = 0;
+	main.match(/import {? ?[a-zA-Z0-9]* ?}? from '.*';\n?/g).forEach((item) => {
+		lastImportPosition += item.length;
+	})
+
+	// insert observedAttributes import for the component
+	const observedAttributesImport = `import observedAttributes${pascalNameComponent} from './components/${kebabNameComponent}/${kebabNameComponent}.observed-attributes';\n`;
+	main = main.slice(0, lastImportPosition) + observedAttributesImport + main.slice(lastImportPosition);
+
+	// find last wrap
+	let lastWrapPositionEnd = main.indexOf('customElements');
+	lastWrapPositionEnd = (lastWrapPositionEnd === -1) ? main.length : lastWrapPositionEnd;
+	const customElementsArr = main.match(/customElements.define['a-zA-Z0-9-, ()=>.\/]*;\n?/g);
+
+	if (customElementsArr) {
+		customElementsArr.forEach((item, offset) => {
+			lastWrapPositionEnd += item.length;
+		});
+	}
+
+	// insert wrap function for dynamic import
+	const wrapDynamicImport = `customElements.define(\'${kebabNameComponent}\', wrap(()=>import(\'./components/${kebabNameComponent}/${kebabNameComponent}.component\'), \'${pascalNameComponent}\', observedAttributes${pascalNameComponent}));\n`;
+	main = main.slice(0, lastWrapPositionEnd) + wrapDynamicImport + main.slice(lastWrapPositionEnd);
+
+	// insert wrap function for dynamic import
 	fs.writeFileSync('./src/main.ts', main, function (err) {
 		if (err) return console.log(err);
 	});

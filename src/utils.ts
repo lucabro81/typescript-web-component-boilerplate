@@ -1,9 +1,31 @@
-export const wrap = (importFn: () => Promise<any>, className: string) => {
+import {IWebComponent} from "@/interfaces";
+
+interface IWebComponentDecorated extends IWebComponent {
+	srcHtml: string,
+	srcStyle: string
+}
+
+interface OriginalComponentClassType {
+	observedAttributes: Array<string>;
+	new(...args: any[]): IWebComponentDecorated
+}
+
+export const wrap = (importFn: () => Promise<any>, className: string, observedAttributes: Array<string>) => {
 
 	class CustomComponent extends HTMLElement {
 
-		private _originalComp?: any;
+		private _originalComp!: IWebComponentDecorated;
 		private _connected = false;
+		private _originalConstruct!: OriginalComponentClassType;
+		private _changedAttributes = false;
+		private _changedName = '';
+		private _changedOldValue = '';
+		private _changedNewValue = '';
+
+		static originalObservedAttributes: any;
+		static get observedAttributes(): Array<string> {
+			return observedAttributes;
+		}
 
 		constructor() {
 			super();
@@ -12,8 +34,10 @@ export const wrap = (importFn: () => Promise<any>, className: string) => {
 
 			importFn().then((m) => {
 
-				this._originalComp = new m[className](shadow);
-				shadow.innerHTML = this._originalComp?.srcHtml;
+				this._originalConstruct = m[className];
+				this._originalComp = new this._originalConstruct(shadow);
+
+				shadow.innerHTML = this._originalComp!.srcHtml;
 				const firstChild = shadow.firstChild;
 
 				const styleTag = document.createElement('style');
@@ -22,28 +46,50 @@ export const wrap = (importFn: () => Promise<any>, className: string) => {
 				shadow.insertBefore(styleTag, firstChild);
 
 				if (this._connected) {
-					(this._originalComp as any).connectedCallback();
+					this._originalComp.connectedCallback();
+					if (this._changedAttributes) {
+						this._originalComp?.attributeChangedCallback(this._changedName, this._changedOldValue, this._changedNewValue);
+					}
 				}
 
-			})
+			});
 		}
 
 		connectedCallback() {
 			this._connected = true;
 		}
 
+		disconnectedCallback() {
+			this._originalComp?.disconnectedCallback();
+		}
+
+		adoptedCallback() {
+			this._originalComp?.adoptedCallback();
+		}
+
+		attributeChangedCallback(name: string, oldValue: any, newValue: any) {
+			if (!this._changedAttributes) {
+				this._changedAttributes = true;
+				this._changedName = name;
+				this._changedOldValue = oldValue;
+				this._changedNewValue = newValue;
+			}
+			else {
+				this._originalComp?.attributeChangedCallback(name, oldValue, newValue);
+			}
+		}
 	}
 
 	return CustomComponent;
 }
 
-type MetaDataComponent = { html?: string, style?: string };
+type MetaDataComponent = { html?: string, style?: string, observedAttributes?: Array<string> };
 
 export function Component(meta: MetaDataComponent) {
 	return (target: Function) => {
 
-		target.prototype.srcHtml = meta?.html;
-		target.prototype.srcStyle = meta?.style;
+		target.prototype.srcHtml = meta?.html || '';
+		target.prototype.srcStyle = meta?.style || '';
 
 		// Ref.: https://gist.github.com/remojansen/16c661a7afd68e22ac6e
 

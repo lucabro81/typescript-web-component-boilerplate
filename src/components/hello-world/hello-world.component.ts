@@ -9,11 +9,6 @@ import {IWebComponent} from "@/interfaces";
 })
 export class HelloWorld implements IWebComponent {
 
-	static get observedAttributes(): Array<string> {
-    // return an array containing the names of the attributes you want to observe
-    return [];
-	}
-
   constructor(private $el: HTMLElement) {}
 
   /**
@@ -55,7 +50,7 @@ export class HelloWorld implements IWebComponent {
    * @param newValue
    */
   attributeChangedCallback(name: string, oldValue: any, newValue: any) {
-     console.log(`${name} changed`);
+     console.log(`${name} changed, oldValue: ${oldValue}, newValue: ${newValue}`);
   }
 
 }
