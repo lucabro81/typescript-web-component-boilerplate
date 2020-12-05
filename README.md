@@ -16,7 +16,7 @@ npm link
 ```
 create-new-component nameComponent
 ```
-This command will create a component folder in ```/src```, named ```/name-component```, with three files inside: a Typescript class, the css file and the html template.
+This command will create a component folder in ```/src```, named ```/name-component```, with four files inside: a Typescript class, a file that exports an array of observed attributes, the css file and the html template.
 
 An import will be added to ```main.ts```
 
@@ -67,4 +67,4 @@ Update dependencies.
 ```
 npm run lint
 ```
-Linter and prettier that run on staged modifies, it seems the git hook on commit doesn't work with phpstorm, I've to understand why
+Linter and prettier that run on staged changes, it seems the git hook on commit doesn't work with phpstorm, I've to understand why
