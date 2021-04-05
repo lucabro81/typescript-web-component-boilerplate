@@ -10,6 +10,7 @@
 		"watch": "webpack --watch",
 		"build": "webpack",
 		"build:prod": "webpack --configFile webpack.prod.js",
+		"create-new-component": "./scripts/newComponent.js",
 		"clean": "rm -rf node_modules package-lock.json && npm install",
 		"update": "rm -f package-lock.json && npm update",
 		"lint": "pretty-quick --staged && lint-staged"
@@ -67,9 +68,7 @@
 		"webpack-cli": "^4.1.0",
 		"webpack-dev-server": "^3.11.0"
 	},
-	"dependencies": {
-		"save-dev": "0.0.1-security"
-	},
+	"dependencies": {},
 	"lint-staged": {
 		"*.{ts,js}": "eslint --cache --fix"
 	}

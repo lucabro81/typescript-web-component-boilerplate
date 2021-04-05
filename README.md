@@ -8,13 +8,12 @@ Template to build lazy loaded web components collections with Typescript and not
 https://github.com/lucabro81/typescript-web-component-boilerplate.git
 cd path/to/project/folder/typ
 npm install
-npm link
 ```
 
 ### How to use
 
 ```
-create-new-component nameComponent
+npm run create-new-component nameComponent
 ```
 This command will create a component folder in ```/src```, named ```/name-component```, with four files inside: a Typescript class, a file that exports an array of observed attributes, the css file and the html template.
 
@@ -46,7 +45,7 @@ Guess what... yep.
 ```
 npm run build:prod
 ```
-Guess what production mode... yep.
+Guess what... yep, but production mode.
 
 ---
 
