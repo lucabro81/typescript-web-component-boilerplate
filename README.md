@@ -52,7 +52,7 @@ Guess what... yep, but production mode.
 ```
 npm run clean
 ```
-Get rid of ```node_modules``` and ```package.json``` and reinstall all the (few) dependencies
+Get rid of ```node_modules``` and ```package-lock.json``` and reinstall all the (few) dependencies
 
 ---
 
