@@ -1,4 +1,4 @@
-import {IWebComponent} from "@/interfaces";
+import { IWebComponent } from '@/interfaces';
 
 interface IWebComponentDecorated extends IWebComponent {
 	srcHtml: string,
@@ -23,6 +23,7 @@ export const wrap = (importFn: () => Promise<any>, className: string, observedAt
 		private _changedNewValue = '';
 
 		static originalObservedAttributes: any;
+
 		static get observedAttributes(): Array<string> {
 			return observedAttributes;
 		}
@@ -30,12 +31,24 @@ export const wrap = (importFn: () => Promise<any>, className: string, observedAt
 		constructor() {
 			super();
 
-			const shadow = this.attachShadow({mode: 'open'});
+			const shadow = this.attachShadow({ mode: 'open' });
 
 			importFn().then((m) => {
 
 				this._originalConstruct = m[className];
-				this._originalComp = new this._originalConstruct(shadow);
+
+				this._originalComp = new this._originalConstruct(shadow, shadow.host);
+
+				this._originalConstruct.prototype?.properties?.forEach((prop: string) => {
+					Object.defineProperty(this, prop, {
+						get: () => {
+							return (this._originalComp as any)[prop];
+						},
+						set: (val) => {
+							(this._originalComp as any)[prop] = val;
+						},
+					});
+				});
 
 				shadow.innerHTML = this._originalComp!.srcHtml;
 				const firstChild = shadow.firstChild;
@@ -51,6 +64,8 @@ export const wrap = (importFn: () => Promise<any>, className: string, observedAt
 						this._originalComp?.attributeChangedCallback(this._changedName, this._changedOldValue, this._changedNewValue);
 					}
 				}
+
+				this.dispatchEvent(new Event('ready'));
 
 			});
 		}
@@ -73,23 +88,23 @@ export const wrap = (importFn: () => Promise<any>, className: string, observedAt
 				this._changedName = name;
 				this._changedOldValue = oldValue;
 				this._changedNewValue = newValue;
-			}
-			else {
+			} else {
 				this._originalComp?.attributeChangedCallback(name, oldValue, newValue);
 			}
 		}
 	}
 
 	return CustomComponent;
-}
+};
 
-type MetaDataComponent = { html?: string, style?: string, observedAttributes?: Array<string> };
+type MetaDataComponent = { html?: string, style?: string, properties?: Array<string> };
 
 export function Component(meta: MetaDataComponent) {
 	return (target: Function) => {
 
 		target.prototype.srcHtml = meta?.html || '';
 		target.prototype.srcStyle = meta?.style || '';
+		target.prototype.properties = meta?.properties || [];
 
 		// Ref.: https://gist.github.com/remojansen/16c661a7afd68e22ac6e
 
@@ -116,6 +131,6 @@ export function Component(meta: MetaDataComponent) {
 		//
 		// // return new constructor (will override original)
 		// return f;
-	}
+	};
 
 }
