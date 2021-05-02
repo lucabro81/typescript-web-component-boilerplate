@@ -6,8 +6,17 @@ import {IWebComponent} from "@/interfaces";
 @Component({
     html: html,
     style: style,
+    properties: ['prop']
 })
 export class HelloWorld implements IWebComponent {
+
+  get prop() {
+    console.log('prop read');
+  }
+
+  set prop(value: string) {
+    console.log('prop written, new value', value);
+  }
 
   constructor(private $el: HTMLElement) {}
 

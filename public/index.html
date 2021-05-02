@@ -9,5 +9,15 @@
 <body>
 <hello-world id="hello"></hello-world>
 <script src="./dist/bundle.js"></script>
+<script>
+	let hello = document.getElementById('hello');
+	hello.addEventListener('ready', () => {
+		hello.prop = 'test';
+
+		setTimeout(() => {
+			hello.prop = 'test1';
+		}, 1000)
+	});
+</script>
 </body>
 </html>
