@@ -21,6 +21,7 @@ export const wrap = (importFn: () => Promise<any>, className: string, observedAt
 		private _changedName = '';
 		private _changedOldValue = '';
 		private _changedNewValue = '';
+		private _props: any = {};
 
 		static originalObservedAttributes: any;
 

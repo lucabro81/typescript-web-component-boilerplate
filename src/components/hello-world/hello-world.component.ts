@@ -12,13 +12,14 @@ export class HelloWorld implements IWebComponent {
 
   get prop() {
     console.log('prop read');
+    return '';
   }
 
   set prop(value: string) {
     console.log('prop written, new value', value);
   }
 
-  constructor(private $el: HTMLElement) {}
+  constructor(private $el: HTMLElement, private $host: Element) {}
 
   /**
    * Invoked each time the custom element is appended into a document-connected element.
@@ -27,11 +28,11 @@ export class HelloWorld implements IWebComponent {
   connectedCallback() {
     console.log('hello-world2 connected ');
 
-    let textcontainer = this.$el.querySelector('.show-clicked-btn');
+    let textContainer = this.$el.querySelector('.show-clicked-btn');
 
     this.$el.querySelector('.btn-to-click')?.addEventListener('click', () => {
-      if (textcontainer) {
-        textcontainer.innerHTML = "clicked!!";
+      if (textContainer) {
+        textContainer.innerHTML = "clicked!!";
       }
     })
   }
