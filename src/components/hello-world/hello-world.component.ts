@@ -4,9 +4,9 @@ import {Component} from "@/utils";
 import {IWebComponent} from "@/interfaces";
 
 @Component({
-    html: html,
-    style: style,
-    properties: ['prop']
+  html: html,
+  style: style,
+  properties: ['prop']
 })
 export class HelloWorld implements IWebComponent {
 
@@ -41,14 +41,14 @@ export class HelloWorld implements IWebComponent {
    * Invoked each time the custom element is disconnected from the document's DOM.
    */
   disconnectedCallback() {
-    console.log('hello-world2 disconnected');
+    console.log('hello-world disconnected');
   }
 
   /**
    * Invoked each time the custom element is moved to a new document.
    */
   adoptedCallback() {
-    console.log('hello-world2 moved');
+    console.log('hello-world moved');
   }
 
   /**
@@ -60,7 +60,7 @@ export class HelloWorld implements IWebComponent {
    * @param newValue
    */
   attributeChangedCallback(name: string, oldValue: any, newValue: any) {
-     console.log(`${name} changed, oldValue: ${oldValue}, newValue: ${newValue}`);
+    console.log(`${name} changed, oldValue: ${oldValue}, newValue: ${newValue}`);
   }
 
 }

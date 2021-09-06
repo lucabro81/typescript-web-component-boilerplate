@@ -3,6 +3,12 @@ const cleanStr = (str) => str.replace(/[\s-_]+/g, '-');
 
 module.exports = {
 
+	/**
+	 * asdQwe or AsdQwe ---> asd-qwe
+	 *
+	 * @param str
+	 * @returns {*}
+	 */
 	kebabCase: (str) => {
 
 		str = str.trim().replace(/[A-Z]+/g, (found, offset) => {
@@ -12,6 +18,12 @@ module.exports = {
 		return cleanStr(str);
 	},
 
+	/**
+	 * asd-qwe ---> asdQwe
+	 *
+	 * @param str
+	 * @returns {*}
+	 */
 	camelCase: (str) => {
 
 		str = cleanStr(str);
@@ -21,6 +33,12 @@ module.exports = {
 		});
 	},
 
+	/**
+	 * asd-qwe ---> AsdQwe
+	 *
+	 * @param str
+	 * @returns {string}
+	 */
 	pascalCase: (str) => {
 
 		str = cleanStr(str);

@@ -1,0 +1,1 @@
+export declare const {{cmpNameCamelCase}}Define: () => void;

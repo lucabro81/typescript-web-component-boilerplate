@@ -1,0 +1,4 @@
+import { wrap } from '../../utils';
+import observedAttributes{{cmpNamePascalCase}} from './{{cmpName}}.observed-attributes';
+
+export const {{cmpNameCamelCase}}Define = () => customElements.define('{{cmpName}}', wrap(()=>import('./{{cmpName}}.component'), '{{cmpNamePascalCase}}', observedAttributes{{cmpNamePascalCase}}));

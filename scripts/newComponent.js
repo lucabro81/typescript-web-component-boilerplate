@@ -8,8 +8,10 @@ const nameComponent = myArgs[0];
 
 const kebabNameComponent = utils.kebabCase(nameComponent);
 const pascalNameComponent = utils.pascalCase(nameComponent);
+const camelNameComponent = utils.camelCase(nameComponent);
 
 const regexNameComponent = /{{cmpName}}/gm;
+const regexNameComponentPascalCase = /{{cmpNamePascalCase}}/gm;
 const regexNameComponentCamelCase = /{{cmpNameCamelCase}}/gm;
 
 const componentsDir = `./src/components/${kebabNameComponent}`;
@@ -19,23 +21,52 @@ if (nameComponent) {
 	// create a folder for the component class, css, and template
 	fs.mkdirSync(componentsDir);
 
+	//////////
+	// READ //
+	//////////
+
 	// read the class template
 	let classTemplate = fs.readFileSync('./scripts/templates/componentClass.template', 'utf8');
 	classTemplate = classTemplate.replace(regexNameComponent, kebabNameComponent)
-		.replace(regexNameComponentCamelCase, pascalNameComponent);
+		.replace(regexNameComponentPascalCase, pascalNameComponent);
+
+	// read the class definition type
+	let classDefinitionTemplate = fs.readFileSync('./scripts/templates/componentClassDefinition.template', 'utf8');
+	classDefinitionTemplate = classDefinitionTemplate.replace(regexNameComponent, kebabNameComponent)
+		.replace(regexNameComponentPascalCase, pascalNameComponent);
 
 	// read the html template
 	let htmlTemplate = fs.readFileSync('./scripts/templates/componentHTML.template', 'utf8');
 	htmlTemplate = htmlTemplate.replace(regexNameComponent, kebabNameComponent);
 
-	// read the html template
+	// read the index template
+	let indexTemplate = fs.readFileSync('./scripts/templates/index.template', 'utf8');
+	indexTemplate = indexTemplate.replace(regexNameComponentCamelCase, camelNameComponent)
+		.replace(regexNameComponentPascalCase, pascalNameComponent)
+		.replace(regexNameComponent, kebabNameComponent);
+	
+	// read the index definition type template
+	let indexDTemplate = fs.readFileSync('./scripts/templates/index.d.template', 'utf8');
+	indexDTemplate = indexDTemplate.replace(regexNameComponentCamelCase, camelNameComponent);
+
+	// read the observed attributes template
 	let observedAttributesTemplate = fs.readFileSync('./scripts/templates/observedAttributes.template', 'utf8');
+
+	///////////
+	// WRITE //
+	///////////
 
 	// ts file
 	fs.writeFileSync(`${componentsDir}/${kebabNameComponent}.component.ts`, classTemplate, function (err) {
 		if (err) return console.log(err);
 	});
 	console.log(`Created ${componentsDir}/${kebabNameComponent}.component.ts`);
+
+	// d.ts file
+	fs.writeFileSync(`${componentsDir}/${kebabNameComponent}.component.d.ts`, classDefinitionTemplate, function (err) {
+		if (err) return console.log(err);
+	});
+	console.log(`Created ${componentsDir}/${kebabNameComponent}.component.d.ts`);
 
 	// ts observed attributes file
 	fs.writeFileSync(`${componentsDir}/${kebabNameComponent}.observed-attributes.ts`, observedAttributesTemplate, function (err) {
@@ -48,6 +79,18 @@ if (nameComponent) {
 		if (err) return console.log(err);
 	});
 	console.log(`Created ${componentsDir}/${kebabNameComponent}.html`);
+
+	// index.ts file
+	fs.writeFileSync(`${componentsDir}/index.ts`, indexTemplate, function (err) {
+		if (err) return console.log(err);
+	});
+	console.log(`Created ${componentsDir}/index.ts`);
+
+	// index.d.ts file
+	fs.writeFileSync(`${componentsDir}/index.d.ts`, indexDTemplate, function (err) {
+		if (err) return console.log(err);
+	});
+	console.log(`Created ${componentsDir}/index.d.ts`);
 
 	// css file
 	fs.writeFileSync(`${componentsDir}/${kebabNameComponent}.css`, '', function (err) {
