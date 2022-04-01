@@ -1,5 +1,3 @@
-import { IWebComponent } from '@/interfaces';
-
 interface IWebComponentDecorated extends IWebComponent {
 	srcHtml: string,
 	srcStyle: string
@@ -10,6 +8,12 @@ interface OriginalComponentClassType {
 	new(...args: any[]): IWebComponentDecorated
 }
 
+interface AttributeValue {
+	name: string,
+	oldValue: string,
+	newValue: string
+}
+
 export const wrap = (importFn: () => Promise<any>, className: string, observedAttributes: Array<string>) => {
 
 	class CustomComponent extends HTMLElement {
@@ -18,10 +22,7 @@ export const wrap = (importFn: () => Promise<any>, className: string, observedAt
 		private _connected = false;
 		private _originalConstruct!: OriginalComponentClassType;
 		private _changedAttributes = false;
-		private _changedName = '';
-		private _changedOldValue = '';
-		private _changedNewValue = '';
-		private _props: any = {};
+		private _attrArr: Array<AttributeValue> = [];
 
 		static originalObservedAttributes: any;
 
@@ -61,8 +62,10 @@ export const wrap = (importFn: () => Promise<any>, className: string, observedAt
 
 				if (this._connected) {
 					this._originalComp.connectedCallback();
-					if (this._changedAttributes) {
-						this._originalComp?.attributeChangedCallback(this._changedName, this._changedOldValue, this._changedNewValue);
+					if (!this._changedAttributes) {
+						this._attrArr.forEach((attr: AttributeValue) =>
+							this._originalComp?.attributeChangedCallback(attr.name, attr.oldValue, attr.newValue));
+						this._changedAttributes = true;
 					}
 				}
 
@@ -85,11 +88,9 @@ export const wrap = (importFn: () => Promise<any>, className: string, observedAt
 
 		attributeChangedCallback(name: string, oldValue: any, newValue: any) {
 			if (!this._changedAttributes) {
-				this._changedAttributes = true;
-				this._changedName = name;
-				this._changedOldValue = oldValue;
-				this._changedNewValue = newValue;
-			} else {
+				this._attrArr.push({ name, oldValue, newValue });
+			}
+			else {
 				this._originalComp?.attributeChangedCallback(name, oldValue, newValue);
 			}
 		}
