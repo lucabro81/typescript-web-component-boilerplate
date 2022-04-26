@@ -15,11 +15,15 @@ const regexNameComponentPascalCase = /{{cmpNamePascalCase}}/gm;
 const regexNameComponentCamelCase = /{{cmpNameCamelCase}}/gm;
 
 const componentsDir = `./src/components/${kebabNameComponent}`;
+const cssDir = `${componentsDir}/styles`;
 
 if (nameComponent) {
 
 	// create a folder for the component class, css, and template
 	fs.mkdirSync(componentsDir);
+
+	// create a folder for the css filss
+	fs.mkdirSync(cssDir);
 
 	//////////
 	// READ //
@@ -51,6 +55,12 @@ if (nameComponent) {
 
 	// read the observed attributes template
 	let observedAttributesTemplate = fs.readFileSync('./scripts/templates/observedAttributes.template', 'utf8');
+
+	// read main css
+	let mainCssTemplate = fs.readFileSync('./scripts/templates/mainCss.template', 'utf8');
+
+	// read variables css
+	let variablesCssTemplate = fs.readFileSync('./scripts/templates/_variablesCss.template', 'utf8');
 
 	///////////
 	// WRITE //
@@ -92,11 +102,21 @@ if (nameComponent) {
 	});
 	console.log(`Created ${componentsDir}/index.d.ts`);
 
-	// css file
-	fs.writeFileSync(`${componentsDir}/${kebabNameComponent}.css`, '', function (err) {
+	// css files
+	fs.writeFileSync(`${componentsDir}/styles/main.css`, mainCssTemplate, function (err) {
 		if (err) return console.log(err);
 	});
-	console.log(`Created ${componentsDir}/${kebabNameComponent}.css`);
+	console.log(`Created ${cssDir}/main.css`);
+
+	fs.writeFileSync(`${cssDir}/_variables.css`, variablesCssTemplate, function (err) {
+		if (err) return console.log(err);
+	});
+	console.log(`Created ${cssDir}/_variables.css`);
+
+	fs.writeFileSync(`${cssDir}/_modifiers.css`, '', function (err) {
+		if (err) return console.log(err);
+	});
+	console.log(`Created ${cssDir}/_modifiers.css`);
 
 	// update main.ts
 	let main = fs.readFileSync('./src/main.ts','utf8');

@@ -13,10 +13,11 @@
 		"start": "webpack serve",
 		"watch": "webpack --watch",
 		"build": "webpack",
-		"build:prod:patch": "npm run _bump-patch && webpack --config webpack.prod.js",
-		"build:prod:minor": "npm run _bump-minor && webpack --config webpack.prod.js",
-		"build:prod:major": "npm run _bump-major && webpack --config webpack.prod.js",
-		"build:npm": "npm run _clean-package && npm run _tsc && npm run _move-definition-types",
+		"build:prod": "webpack --config webpack.prod.js",
+		"build:prod:patch": "npm run _bump-patch && npm run build:prod",
+		"build:prod:minor": "npm run _bump-minor && npm run build:prod",
+		"build:prod:major": "npm run _bump-major && npm run build:prod",
+		"build:npm": "npm run _clean-package && npm run _tsc && npm run _copy-definition-types && npm run _copy-css-html",
 		"publish:npm:patch": "npm run _bump-patch && npm run build:npm npm login && npm publish",
 		"publish:npm:minor": "npm run _bump-minor && npm run build:npm npm login && npm publish",
 		"publish:npm:major": "npm run _bump-major && npm run build:npm npm login && npm publish",
@@ -29,7 +30,8 @@
 		"_bump-minor": "npm version minor",
 		"_bump-major": "npm version major",
 		"_clean-package": "rm -rf package && mkdir package",
-		"_move-definition-types": "./scripts/moveDefinitionTypes.js"
+		"_copy-definition-types": "./scripts/copyDefinitionTypes.js",
+		"_copy-css-html": "./scripts/copyCssHtml.js"
 	},
 	"husky": {
 		"hooks": {
@@ -58,17 +60,18 @@
 		"html-webpack-inline-source-plugin": "0.0.10",
 		"html-webpack-plugin": "^4.5.0",
 		"style-loader": "^2.0.0",
-		"terser-webpack-plugin": "^5.0.3",
+		"terser-webpack-plugin": "^4.2.3",
 		"ts-loader": "^8.0.7",
 		"tsconfig-paths-webpack-plugin": "^3.3.0",
 		"webpack": "^5.3.2",
 		"webpack-cli": "^4.1.0",
-		"webpack-dev-server": "^3.11.0"
+		"webpack-dev-server": "^3.11.0",
+		"@types/webpack": "^5.28.0",
+		"@types/estree": "^0.0.51",
+		"tslib": "^2.0.3",
+		"typescript": "^4.0.5"
 	},
-	"dependencies": {
-		"typescript": "^4.0.5",
-		"tslib": "^2.0.3"
-	},
+	"dependencies": {},
 	"lint-staged": {
 		"*.{ts,js}": "eslint --cache --fix"
 	}

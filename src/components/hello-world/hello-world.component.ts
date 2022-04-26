@@ -1,12 +1,11 @@
 import html from './hello-world.html';
-import style from './hello-world.css';
-import {Component} from "@/utils";
-import {IWebComponent} from "@/interfaces";
+import style from './styles/main.css';
+import { Component } from "@/utils";
 
 @Component({
-  html: html,
-  style: style,
-  properties: ['prop']
+    html: html,
+    style: style,
+	  properties: []
 })
 export class HelloWorld implements IWebComponent {
 

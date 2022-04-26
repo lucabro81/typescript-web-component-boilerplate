@@ -18,9 +18,9 @@ export const wrap = (importFn: () => Promise<any>, className: string, observedAt
 
 	class CustomComponent extends HTMLElement {
 
-		private _originalComp!: IWebComponentDecorated;
+		private _originalComp: IWebComponentDecorated = {} as IWebComponentDecorated;
 		private _connected = false;
-		private _originalConstruct!: OriginalComponentClassType;
+		private _originalConstruct: OriginalComponentClassType = {} as OriginalComponentClassType;
 		private _changedAttributes = false;
 		private _attrArr: Array<AttributeValue> = [];
 

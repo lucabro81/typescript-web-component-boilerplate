@@ -1,7 +1,6 @@
 import html from './{{cmpName}}.html';
-import style from './{{cmpName}}.css';
-import {Component} from "@/utils";
-import {IWebComponent} from "@/interfaces";
+import style from './styles/main.css';
+import { Component } from "@/utils";
 
 @Component({
     html: html,
@@ -47,7 +46,8 @@ export class {{cmpNamePascalCase}} implements IWebComponent {
    * @param newValue
    */
   attributeChangedCallback(name: string, oldValue: any, newValue: any) {
-     console.log(`${name} changed`);
+     const nameProp = name.replace(/-[a-zA-Z]/g, (found: string) => found.slice(1).toUpperCase());
+     (this as any)[nameProp] = newValue;
   }
 
 }
