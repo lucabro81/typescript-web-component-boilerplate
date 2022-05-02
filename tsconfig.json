@@ -6,11 +6,15 @@
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
+    "declaration": false,
+    "removeComments": false,
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
+    "outDir": "package",
     "baseUrl": ".",
+    "typeRoots": [ "node_modules/@types" ],
     "paths": {
       "@/*": [
         "src/*"
@@ -24,10 +28,12 @@
     ]
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
+    "src/components/**/*.ts",
+    "src/components/**/*.tsx",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx",
+    "src/typings.d.ts",
+    "src/shim.d.ts"
   ],
   "exclude": [
     "node_modules"

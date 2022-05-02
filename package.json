@@ -1,78 +1,76 @@
 {
-	"name": "typescript-web-components-lazy-loaded-template",
-	"version": "1.0.0",
-	"author": "Luca Brognara",
-	"license": "ISC",
-	"description": "Template to build web components collections lazy loaded",
-	"main": "./package/main.js",
-	"types": "./package/typings.d.ts",
-	"files": [
-		"package"
-	],
-	"scripts": {
-		"start": "webpack serve",
-		"watch": "webpack --watch",
-		"build": "webpack",
-		"build:prod": "webpack --config webpack.prod.js",
-		"build:prod:patch": "npm run _bump-patch && npm run build:prod",
-		"build:prod:minor": "npm run _bump-minor && npm run build:prod",
-		"build:prod:major": "npm run _bump-major && npm run build:prod",
-		"build:npm": "npm run _clean-package && npm run _tsc && npm run _copy-definition-types && npm run _copy-css-html",
-		"publish:npm:patch": "npm run _bump-patch && npm run build:npm npm login && npm publish",
-		"publish:npm:minor": "npm run _bump-minor && npm run build:npm npm login && npm publish",
-		"publish:npm:major": "npm run _bump-major && npm run build:npm npm login && npm publish",
-		"create-new-component": "./scripts/newComponent.js",
-		"clean": "rm -rf node_modules package-lock.json && npm install",
-		"update": "rm -f package-lock.json && npm update",
-		"version-and-publish": "npm version patch && npm publish",
-		"_tsc": "tsc",
-		"_bump-patch": "npm version patch",
-		"_bump-minor": "npm version minor",
-		"_bump-major": "npm version major",
-		"_clean-package": "rm -rf package && mkdir package",
-		"_copy-definition-types": "./scripts/copyDefinitionTypes.js",
-		"_copy-css-html": "./scripts/copyCssHtml.js"
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "npm run lint"
-		}
-	},
-	"keywords": [
-		"webcomponents",
-		"webcomponent",
-		"HTMLElement",
-		"CustomElements",
-		"Typescript",
-		"lazy loading",
-		"template",
-		"boilerplate"
-	],
-	"bin": {
-		"create-new-component": "./scripts/newComponent.js"
-	},
-	"devDependencies": {
-		"babel-minify-webpack-plugin": "^0.3.1",
-		"clean-webpack-plugin": "^3.0.0",
-		"css-loader": "^5.0.0",
-		"fs-extra": "^9.0.1",
-		"html-loader": "^1.3.2",
-		"html-webpack-inline-source-plugin": "0.0.10",
-		"html-webpack-plugin": "^4.5.0",
-		"style-loader": "^2.0.0",
-		"terser-webpack-plugin": "^4.2.3",
-		"ts-loader": "^8.0.7",
-		"tsconfig-paths-webpack-plugin": "^3.3.0",
-		"webpack": "^5.3.2",
-		"webpack-cli": "^4.1.0",
-		"webpack-dev-server": "^3.11.0",
-		"@types/webpack": "^5.28.0",
-		"@types/estree": "^0.0.51",
-		"tslib": "^2.0.3",
-		"typescript": "^4.0.5"
-	},
-	"dependencies": {},
-	"lint-staged": {
-		"*.{ts,js}": "eslint --cache --fix"
-	}
+  "name": "typescript-web-components-lazy-loaded-template",
+  "version": "1.0.0",
+  "author": "Luca Brognara",
+  "license": "ISC",
+  "description": "Template to build web components collections lazy loaded",
+  "main": "./package/main.js",
+  "types": "./package/typings.d.ts",
+  "files": [
+    "package"
+  ],
+  "scripts": {
+    "start": "webpack serve",
+    "watch": "webpack --watch",
+    "build": "webpack",
+    "build:prod": "webpack --config webpack.prod.js",
+    "build:prod:patch": "npm run _bump-patch && npm run build:prod",
+    "build:prod:minor": "npm run _bump-minor && npm run build:prod",
+    "build:prod:major": "npm run _bump-major && npm run build:prod",
+    "build:npm": "npm run _clean-package && npm run _tsc && npm run _copy-definition-types && npm run _copy-css-html",
+    "publish:npm:patch": "npm run _bump-patch && npm run build:npm npm login && npm publish",
+    "publish:npm:minor": "npm run _bump-minor && npm run build:npm npm login && npm publish",
+    "publish:npm:major": "npm run _bump-major && npm run build:npm npm login && npm publish",
+    "create-new-component": "./scripts/newComponent.js",
+    "clean": "rm -rf node_modules package-lock.json && npm install",
+    "update": "rm -f package-lock.json && npm update",
+    "version-and-publish": "npm version patch && npm publish",
+    "_tsc": "tsc",
+    "_bump-patch": "npm version patch",
+    "_bump-minor": "npm version minor",
+    "_bump-major": "npm version major",
+    "_clean-package": "rm -rf package && mkdir package",
+    "_copy-definition-types": "./scripts/copyDefinitionTypes.js",
+    "_copy-css-html": "./scripts/copyCssHtml.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
+  "keywords": [
+    "webcomponents",
+    "webcomponent",
+    "HTMLElement",
+    "CustomElements",
+    "Typescript",
+    "lazy loading",
+    "template",
+    "boilerplate"
+  ],
+  "bin": {
+    "create-new-component": "./scripts/newComponent.js"
+  },
+  "devDependencies": {
+    "@types/estree": "^0.0.51",
+    "@types/webpack": "^5.28.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^5.0.0",
+    "fs-extra": "^9.0.1",
+    "html-loader": "^1.3.2",
+    "html-webpack-inline-source-plugin": "0.0.10",
+    "html-webpack-plugin": "^4.5.0",
+    "style-loader": "^2.0.0",
+    "terser-webpack-plugin": "^4.2.3",
+    "ts-loader": "^8.0.7",
+    "tsconfig-paths-webpack-plugin": "^3.3.0",
+    "tslib": "^2.0.3",
+    "typescript": "^4.0.5",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.8.1"
+  },
+  "lint-staged": {
+    "*.{ts,js}": "eslint --cache --fix"
+  }
 }

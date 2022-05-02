@@ -6,16 +6,19 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 module.exports = {
 	mode: 'development',
 	entry: './src/main.ts',
-	devtool: 'source-map',
+	devtool: 'inline-source-map',
 	devServer: {
-		contentBase: './public',
-		publicPath: '/dist/',
-		open: true
+		static: {
+			directory: path.join(__dirname, 'public'),
+		},
+		open: true,
+		compress: true,
+		hot: true,
+		port: 8080,
 	},
 	plugins: [
 		new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
 	],
-	watch: true,
 	watchOptions: {
 		ignored: ['scripts/**/*.[js|template]', 'node_modules/**']
 	},
@@ -49,7 +52,8 @@ module.exports = {
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		filename: 'bundle.js',
-		chunkFilename: "[id].bundle.js"
+		chunkFilename: "[id].bundle.js",
+		publicPath: "/dist"
 	},
 
 	optimization: {
